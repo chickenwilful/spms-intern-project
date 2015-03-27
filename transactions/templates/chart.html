@@ -1,0 +1,98 @@
+{% load staticfiles %}
+{% load transaction_template_tags %}
+
+<script src="{% static 'js/highcharts.js' %}"></script>
+<script src="{% static 'js/exporting.js' %}"></script>
+<script src="{% static 'js/grid_theme.js' %}"></script>
+
+
+<script type="text/javascript">
+
+    function pad(n, width, z) {
+      z = z || '0';
+      n = n + '';
+      return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
+    category_list = [];
+    for(var year = 2012; year < 2016; year++)
+        for(var month=1; month < 13; month++) 
+            if (year < 2015 || month == 1)
+                category_list.push(year + '.' + pad(month, 2));
+
+    jschart = {{chart|jsonify}}
+
+    console.log(jschart)
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                zoomType: 'xy',
+            },
+            plotOptions: {
+                series: {
+                    connectNulls: true
+                }
+            },
+            title: {
+                text: 'Average Monthly Rental Price in Singapore'
+            },
+            subtitle: {
+                text: 'Source: Internal source'
+            },
+            xAxis: [{
+                categories: category_list
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value} SGD',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: 'Average price',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }
+             ],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                y: 20,
+                verticalAlign: 'top',
+                borderWidth: 0,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+            },
+            series: [
+                {% if chart.by_itself %}{
+                name: 'Average price',
+                type: 'spline',
+                data: jschart['by_itself']['price'],
+                tooltip: {
+                    valueSuffix: ' SGD'
+                }
+            },{% endif %} {% if chart.by_coordinate %}{
+                name: 'Neighbor Coordinate',
+                type: 'spline',
+                data: jschart['by_coordinate']['price'],
+                tooltip: {
+                    valueSuffix: ' SGD'
+                }
+            }, {% endif %} {% if chart.by_postalcode %}{
+                name: 'Neighbor Postalcode',
+                type: 'spline',
+                data: jschart['by_postalcode']['price'],
+                tooltip: {
+                    valueSuffix: ' SGD'
+                }
+            } {% endif %}]
+        });
+    });
+</script>
+

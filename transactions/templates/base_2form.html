@@ -1,0 +1,19 @@
+{% load bootstrap3 %}
+
+{% block formbody %}
+<form role="form" class="form-horizontal" method="post">
+    <div class="col-lg-6">
+    {% bootstrap_form form1 layout="horizontal" %}
+    </div>
+    <div class="col-lg-6">
+    {% bootstrap_form form2 layout="horizontal" %}
+    </div>
+    {% csrf_token %}
+    {% buttons submit="OK" layout="horizontal"%}
+        <!--<button type="submit">OK</button>-->
+        <!--<button type="reset" onclick='$(this).closest("form").find("input[type=text], select, textarea").val("");$("#id_series_1").checked = false;$("#id_series_2").checked = false;'>Reset</button>-->
+    {% endbuttons %}
+</form>
+
+{% endblock formbody %}
+

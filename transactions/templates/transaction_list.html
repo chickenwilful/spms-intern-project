@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load transaction_template_tags %}
+{% load bootstrap3 %}
+
+{% block body %}
+
+<div class="row" style="background-color: wheat; padding-top: 20px">
+    {% include 'base_2form.html' with form1=filter_form form2=chart_form %}
+</div>
+
+{% if chart and result_count %}
+{% block chart %}
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 80"></div>
+{% endblock chart %}
+{% endif %}
+
+<div id="results" class="row" style="padding-top: 20px; padding-bottom: 50px">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+    <div class="row" style="text-align: center; padding-bottom: 20px">
+        {{result_count}} results found. Displays at most 50 results.
+    </div>
+
+    <table style="width:100%;" border="1">
+        <tr>
+            <td style="text-align: center">Type</td>
+            <td style="text-align: center">Name</td>
+            <td style="text-align: center">Address</td>
+            <td style="text-align: center">Postal Code</td>
+            <td style="text-align: center">Year</td>
+            <td style="text-align: center">Month</td>
+            <td style="text-align: center">Number of Bedroom</td>
+            <td style="text-align: center">Size (sqft)</td>
+            <td style="text-align: center">Monthly Price</td>
+            <td style="text-align: center">Latitude</td>
+            <td style="text-align: center">Longitude</td>
+
+        </tr>
+
+    {% for transaction in transactions %}
+        <tr>
+            <td style="text-align: center">{{transaction.type|actualType}}</td>
+            <td>{{transaction.name|refine}}</td>
+            <td>{{transaction.address|refine}}</td>
+            <td style="text-align: center">{{transaction.postal_code|refine}}</td>
+            <td style="text-align: center">{{transaction.year|refine}}</td>
+            <td style="text-align: center">{{transaction.month|refine}}</td>
+            <td style="text-align: center">{{transaction.room_count|refine}}</td>
+            <td style="text-align: center">{{transaction|area_sqft_range}}</td>
+            <td style="text-align: center">{{transaction.monthly_rent}}</td>
+            <td style="text-align: center">{{transaction.latitude|floatformat:4}}</td>
+            <td style="text-align: center">{{transaction.longitude|floatformat:4}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra-js %}
+    {% include 'chart.html' %}
+{% endblock extra-js %}
+
+

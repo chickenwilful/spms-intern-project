@@ -34,7 +34,7 @@ class ChartFilterForm(forms.Form):
         self.is_valid()  # Call it in order to be able to call self.cleaned_data
         if self.cleaned_data['list'] != Chart.ITSELF:
             return True
-        if Chart.NEIGHBOR_ADDRESS in self.cleaned_data['series']:
+        if Chart.NEIGHBOR_COORDINATE in self.cleaned_data['series']:
             return True
         if Chart.NEIGHBOR_POSTALCODE in self.cleaned_data['series']:
             return True
@@ -83,7 +83,7 @@ class FilterForm(forms.Form):
 
             # If transactions is empty, raise Validation Error
             if len(self.transactions) == 0:
-                raise forms.ValidationError("Error: No transaction match!")
+                raise forms.ValidationError("Error: No transaction match!If you select 'neighbor postalcode' or 'neighbor coordinate', please make sure the query returns exactly 1 property.")
 
             # If transactions contain more than 1 property, raise Validation Error
             temp = self.transactions.filter(address=self.transactions[0].address).filter(postal_code=self.transactions[0].postal_code)

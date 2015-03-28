@@ -5,18 +5,18 @@ from transactions.transaction_util import get_transactions_by_neighbor_postal_co
 class Chart(object):
     ITSELF = 'i'
     NEIGHBOR_POSTALCODE = 'p'
-    NEIGHBOR_ADDRESS = 'a'
+    NEIGHBOR_COORDINATE = 'c'
 
     CHART_SERIES_CHOICES = (
         (ITSELF, 'Itself'),
         (NEIGHBOR_POSTALCODE, 'Neighbor Postal Code'),
-        (NEIGHBOR_ADDRESS, 'Neighbor Address'),
+        (NEIGHBOR_COORDINATE, 'Neighbor Address'),
     )
 
     LIST_CHOICES = (
         (ITSELF, 'Itself'),
         (NEIGHBOR_POSTALCODE, 'Neighbor Postal Code'),
-        (NEIGHBOR_ADDRESS, 'Neighbor Address'),
+        (NEIGHBOR_COORDINATE, 'Neighbor Address'),
     )
 
     @staticmethod

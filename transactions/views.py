@@ -85,7 +85,7 @@ def transaction_list(request, template="transaction_list.html"):
                 charts['by_itself'] = Chart.chart_retrieve(filtered_transactions)
             if Chart.NEIGHBOR_POSTALCODE in chart_series:
                 charts['by_postalcode'] = Chart.chart_by_neighbor_postal_code(transactions, property.postal_code)
-            if Chart.NEIGHBOR_ADDRESS in chart_series:
+            if Chart.NEIGHBOR_COORDINATE in chart_series:
                 charts['by_coordinate'] = Chart.chart_by_neighbor_coordinate_property(transactions, property)
 
             # Handle displayed list
@@ -94,7 +94,7 @@ def transaction_list(request, template="transaction_list.html"):
                 transactions = filtered_transactions
             elif display_list == Chart.NEIGHBOR_POSTALCODE:
                 transactions = get_transactions_by_neighbor_postal_code(transactions, property.postal_code)
-            else:  # display_list == Chart.NEIGHBOR_ADDRESS
+            else:  # display_list == Chart.NEIGHBOR_COORDINATE
                 transactions = get_transactions_by_neighbor_coordinate_property(transactions, property, include=True)
 
             result_count = len(transactions)

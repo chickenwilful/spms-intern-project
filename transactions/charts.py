@@ -10,13 +10,13 @@ class Chart(object):
     CHART_SERIES_CHOICES = (
         (ITSELF, 'Itself'),
         (NEIGHBOR_POSTALCODE, 'Neighbor Postal Code'),
-        (NEIGHBOR_COORDINATE, 'Neighbor Address'),
+        (NEIGHBOR_COORDINATE, 'Neighbor Coordinate'),
     )
 
     LIST_CHOICES = (
         (ITSELF, 'Itself'),
         (NEIGHBOR_POSTALCODE, 'Neighbor Postal Code'),
-        (NEIGHBOR_COORDINATE, 'Neighbor Address'),
+        (NEIGHBOR_COORDINATE, 'Neighbor Coordinate'),
     )
 
     @staticmethod

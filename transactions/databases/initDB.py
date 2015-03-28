@@ -1,13 +1,15 @@
 import os
 import datetime
-from transaction.templatetags.transaction_template_tags import camelcase
+import sys
 
+sys.path.append(os.getcwd())
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "spms_site.settings")
 import django
 django.setup()
 
+
 import xlrd
-from transaction.models import Transaction
+from transactions.models import Transaction
 
 
 def read_hdb_rental(input_path='HDB_rental.xlsx'):
@@ -186,18 +188,7 @@ def read_condo_rental(input_path='Residential_rental.xlsx'):
 
 
 if __name__ == '__main__':
-    # read_hdb_rental_new()
+    read_hdb_rental_new()
     # read_hdb_sale()
-    # read_condo_rental()
-
-
-    transactions = Transaction.objects.filter(postal_code__isnull=True)
-    addresses = set([trans.address for trans in transactions])
-
-    print len(addresses)
-    with open("unknown_postalcode_addresses.txt", "w") as f:
-        for address in addresses:
-            f.write(address + '\n')
-
-
+    read_condo_rental()
 
